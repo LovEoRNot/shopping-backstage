@@ -1,13 +1,15 @@
 var path = require('path')
 var webpack = require('webpack')
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
-var extractCSS = new ExtractTextPlugin('style/[name]-one.css');
+var HtmlWebpackPlugin = require('html-webpack-plugin')
+
+var extractCSS = new ExtractTextPlugin('style/main.css')
 
 module.exports = {
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
+    publicPath: './',
     filename: 'build.js'
   },
   module: {
@@ -85,7 +87,11 @@ module.exports = {
     ]
   },
   plugins: [
-    extractCSS
+    extractCSS,
+    new HtmlWebpackPlugin({
+      title: '后台管理',
+      template: 'index.tpl.html'
+    })
     // new ExtractTextPlugin("./css/style.css", {
     //   allChunks: true
     // })     
