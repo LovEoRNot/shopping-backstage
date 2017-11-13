@@ -1,6 +1,7 @@
 var path = require('path')
 var webpack = require('webpack')
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
+var extractCSS = new ExtractTextPlugin('style/[name]-one.css');
 
 module.exports = {
   entry: './src/main.js',
@@ -13,27 +14,35 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: [
-          'vue-style-loader',
-          'css-loader'
-        ],
+        use: ExtractTextPlugin.extract({
+          fallback: "vue-style-loader",
+          use: "css-loader"
+        })
+        // [
+        //   'vue-style-loader',
+        //   'css-loader'
+        // ],
       },
       {
         test: /\.scss$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          'sass-loader'
-        ],
+        use: ExtractTextPlugin.extract({
+          fallback: "vue-style-loader",
+          use: ["css-loader", 'sass-loader']
+        })
+        // [
+        //   'vue-style-loader',
+        //   'css-loader',
+        //   'sass-loader'
+        // ],
       },
-      {
-        test: /\.sass$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          'sass-loader?indentedSyntax'
-        ],
-      },
+      // {
+      //   test: /\.sass$/,
+      //   use: [
+      //     'vue-style-loader',
+      //     'css-loader',
+      //     'sass-loader?indentedSyntax'
+      //   ],
+      // },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
@@ -42,16 +51,20 @@ module.exports = {
             // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
             // the "scss" and "sass" values for the lang attribute to the right configs here.
             // other preprocessors should work out of the box, no loader config like this necessary.
-            'scss': [
-              'vue-style-loader',
-              'css-loader',
-              'sass-loader'
-            ],
-            'sass': [
-              'vue-style-loader',
-              'css-loader',
-              'sass-loader?indentedSyntax'
-            ]
+            // 'scss': [
+            //   'vue-style-loader',
+            //   'css-loader',
+            //   'sass-loader'
+            // ],
+            // 'sass': [
+            //   'vue-style-loader',
+            //   'css-loader',
+            //   'sass-loader?indentedSyntax'
+            // ]
+            'scss': ExtractTextPlugin.extract({
+              fallback: "vue-style-loader",
+              use: ["css-loader", 'sass-loader']
+            })
           }
           // other vue-loader options go here
         }
@@ -72,7 +85,10 @@ module.exports = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin("style.css")         //提取所有.vue文件中的css, 把他们统一放到一个style.css文件中
+    extractCSS
+    // new ExtractTextPlugin("./css/style.css", {
+    //   allChunks: true
+    // })     
   ],
   resolve: {
     alias: {
