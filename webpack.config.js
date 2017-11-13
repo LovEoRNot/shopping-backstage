@@ -1,5 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
+var ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 module.exports = {
   entry: './src/main.js',
@@ -62,13 +63,17 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
-        loader: 'file-loader',
+        loader: 'url-loader',
         options: {
-          name: '[name].[ext]?[hash]'
+          limit: 8192,
+          name: './asset/img/[name].[ext]?[hash]'
         }
       }
     ]
   },
+  plugins: [
+    new ExtractTextPlugin("style.css")         //提取所有.vue文件中的css, 把他们统一放到一个style.css文件中
+  ],
   resolve: {
     alias: {
       'vue$': 'vue/dist/vue.esm.js'
