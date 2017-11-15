@@ -8,8 +8,8 @@
     </a>
   </div>
   <ul>
-    <li :class="{active: item.isShow}" v-for="(item, index) in itemList" :key="index">
-      <a :href="item.link" @click="showSubmenu(index)">{{item.name}}</a>
+    <li :class="{active: item.isShow}" v-for="(item, index) in itemList" :key="index"  @click="showSubmenu(index)">
+      <router-link :to="item.link">{{item.name}}</router-link>
       <div class="second-menu" v-show="item.isShow">
         <div class="second-menu-title">
           {{item.subMenu.title}}
