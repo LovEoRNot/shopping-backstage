@@ -9,42 +9,34 @@ module.exports = {
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, './dist'),
-    publicPath: './',
+    publicPath: '/dist/',
     filename: 'build.js'
   },
   module: {
     rules: [
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: "vue-style-loader",
-          use: "css-loader"
-        })
-        // [
-        //   'vue-style-loader',
-        //   'css-loader'
-        // ],
+        use: [
+          'vue-style-loader',
+          'css-loader'
+        ],
       },
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: "vue-style-loader",
-          use: ["css-loader", 'sass-loader']
-        })
-        // [
-        //   'vue-style-loader',
-        //   'css-loader',
-        //   'sass-loader'
-        // ],
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          'sass-loader'
+        ],
       },
-      // {
-      //   test: /\.sass$/,
-      //   use: [
-      //     'vue-style-loader',
-      //     'css-loader',
-      //     'sass-loader?indentedSyntax'
-      //   ],
-      // },
+      {
+        test: /\.sass$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          'sass-loader?indentedSyntax'
+        ],
+      },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
@@ -53,20 +45,16 @@ module.exports = {
             // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
             // the "scss" and "sass" values for the lang attribute to the right configs here.
             // other preprocessors should work out of the box, no loader config like this necessary.
-            // 'scss': [
-            //   'vue-style-loader',
-            //   'css-loader',
-            //   'sass-loader'
-            // ],
-            // 'sass': [
-            //   'vue-style-loader',
-            //   'css-loader',
-            //   'sass-loader?indentedSyntax'
-            // ]
-            'scss': ExtractTextPlugin.extract({
-              fallback: "vue-style-loader",
-              use: ["css-loader", 'sass-loader']
-            })
+            'scss': [
+              'vue-style-loader',
+              'css-loader',
+              'sass-loader'
+            ],
+            'sass': [
+              'vue-style-loader',
+              'css-loader',
+              'sass-loader?indentedSyntax'
+            ]
           }
           // other vue-loader options go here
         }
@@ -86,16 +74,6 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    extractCSS,
-    new HtmlWebpackPlugin({
-      title: '后台管理',
-      template: 'index.tpl.html'
-    })
-    // new ExtractTextPlugin("./css/style.css", {
-    //   allChunks: true
-    // })     
-  ],
   resolve: {
     alias: {
       'vue$': 'vue/dist/vue.esm.js'
@@ -115,7 +93,48 @@ module.exports = {
 
 if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map'
-  // http://vue-loader.vuejs.org/en/workflow/production.html
+  module.exports.output.publicPath = './'
+  module.exports.module.rules = [
+    {
+      test: /\.css$/,
+      use: ExtractTextPlugin.extract({
+        fallback: "vue-style-loader",
+        use: "css-loader"
+      })
+    },
+    {
+      test: /\.scss$/,
+      use: ExtractTextPlugin.extract({
+        fallback: "vue-style-loader",
+        use: ["css-loader", 'sass-loader']
+      })
+    },
+    {
+      test: /\.vue$/,
+      loader: 'vue-loader',
+      options: {
+        loaders: {
+          'scss': ExtractTextPlugin.extract({          
+            fallback: "vue-style-loader",
+            use: ["css-loader", 'sass-loader']
+          })
+        }
+      }
+    },
+    {
+      test: /\.js$/,
+      loader: 'babel-loader',
+      exclude: /node_modules/
+    },
+    {
+      test: /\.(png|jpg|gif|svg)$/,
+      loader: 'url-loader',
+      options: {
+        limit: 8192,
+        name: './asset/img/[name].[ext]?[hash]'
+      }
+    }
+  ]
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
       'process.env': {
@@ -130,6 +149,11 @@ if (process.env.NODE_ENV === 'production') {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
-    })
+    }),
+    extractCSS,
+    new HtmlWebpackPlugin({
+      title: '后台管理',
+      template: './index.tpl.html'
+    }) 
   ])
 }

@@ -1,7 +1,11 @@
 <template>
 <div class="aside">
   <div class="shop-icon">
-    <a href=""></a>
+    <a href="">
+      <div class="icon">
+        <img src="https://img.yzcdn.cn/public_files/2016/05/13/8f9c442de8666f82abaf7dd71574e997.png?imageView2/2/w/145/h/145/q/75/format/webp" alt="">
+      </div>
+    </a>
   </div>
   <ul>
     <li :class="{active: item.isShow}" v-for="(item, index) in itemList" :key="index">
@@ -12,12 +16,11 @@
         </div>
         <ul>
           <li :class="{active: key == 0}" v-for="(subItem, key) in item.subMenu.menuList" :key="key">
-            <a :href="subItem.href">{{subItem.name}}</a>
+            <router-link :to="subItem.href">{{subItem.name}}</router-link>
           </li>
         </ul>
       </div>
     </li>
-
   </ul>
 </div>
 </template>
@@ -26,11 +29,11 @@
   //侧边栏显示列表
   var itemList = [
     {
-      link: '###',
+      link: '/shop/index',
       name: '店铺',
       subMenu: {
         title: '店铺信息',
-        menuList: [{href: '', name: '店铺概况'}, {href: '', name: '客服管理'}]
+        menuList: [{href: '/shop/index', name: '店铺概况'}, {href: '', name: '客服管理'}]
       },
       isShow: true   //首项默认显示
     },
@@ -39,16 +42,16 @@
       name: '商家',
       subMenu: {
         title: '商家信息',
-        menuList: [{href: '', name: '商家管理'}]
+        menuList: [{href: '', name: '商家管理'},{href: '', name: '广告管理'},{href: '', name: '商家注册'}]
       },
       isShow: false
     },
     {
-      link: '###',
+      link: '/product/manage',
       name: '商品',
       subMenu: {
         title: '商品信息',
-        menuList: [{href: '', name: '商品管理'},{href: '', name: '商品发布'},{href: '', name: '分类管理'},{href: '', name: '品牌管理'}]
+        menuList: [{href: '/product/manage', name: '商品管理'},{href: '', name: '商品发布'},{href: '', name: '分类管理'},{href: '', name: '品牌管理'}]
       },
       isShow: false
     },
@@ -90,6 +93,9 @@
 </script>
 
 <style lang="scss" scoped>
+$border: 1px solid #f2f2f2;
+$totalBgColor: #F8F8F8;
+
 .aside {
   .shop-icon {
     a {
@@ -98,16 +104,32 @@
       height: 63px;
       overflow: hidden;
     }
+
+    .icon {
+      margin: 14px auto 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid #fff;
+      background-size: cover;
+      background-position: 50% 50%;
+      background-color: #fff;
+      overflow: hidden;
+      
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
   }
   li {
     font-size: 14px;
     height: 36px;
     line-height: 36px;
     margin-bottom: 14px;
-    cursor: pointer;
 
     &.active {
-      background: #F8F8F8;
+      background: $totalBgColor;
       a {
         color: #333;
       }
@@ -133,13 +155,13 @@
     height: 100%;
     width: 115px;
     background: #fff;
-    border-right: 1px solid #f2f2f2;
+    border-right: $border;
 
     .second-menu-title {
       padding-left: 20px;
       height: 50px;
       line-height: 50px;
-      border-bottom: 1px solid #f2f2f2;
+      border-bottom: $border;
       cursor: default;
     }
     ul {
@@ -160,7 +182,7 @@
       }
 
       &.active {
-        background: #f8f8f8;
+        background: $totalBgColor;
       }
       
       &:not(.active):hover {
