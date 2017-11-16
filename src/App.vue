@@ -165,4 +165,15 @@ a {
   box-shadow: 0 0 1px 0 rgba(0,0,0,0.2);
   background: #fff;
 }
+
+.chosen-container {
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  height: 28px;
+  width: 100px;
+  border: 1px solid rgb(221, 221, 221);
+  border-radius: 2px;
+  outline: none; 
+}
 </style>

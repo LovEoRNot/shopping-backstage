@@ -7,16 +7,28 @@ const routes = [
     redirect: '/shop/index'
   },
   {
-    path: '/shop/index',
-    component: ShopInfoIndex
+    path: '/shop',
+    component: ShopInfoIndex,
+    children: [
+      {
+        path: 'index',
+        component: ShopInfoIndex
+      }
+    ]
   },
   {
-    path: '/product/manage',
-    component: resolve => require(['../components/product-info-component/ProductInfoManage.vue'],resolve) 
+    path: '/product',
+    component: resolve => require(['../components/product-info-component/ProductInfoManage.vue'],resolve),
+    children: [
+      {
+        path: 'manage',
+        component: resolve => require(['../components/product-info-component/ProductInfoManage.vue'],resolve),
+      }
+    ]
   }
 ]
 
 export const router = new VueRouter({
-  mode: 'history',
+  base: __dirname,
   routes
 })

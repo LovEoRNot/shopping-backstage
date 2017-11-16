@@ -8,14 +8,14 @@
     </a>
   </div>
   <ul>
-    <li :class="{active: item.isShow}" v-for="(item, index) in itemList" :key="index"  @click="showSubmenu(index)">
+    <li :class="{active: item.isShow }" v-for="(item, index) in itemList" :key="index"  @click="showSubmenu(index)">
       <router-link :to="item.link">{{item.name}}</router-link>
       <div class="second-menu" v-show="item.isShow">
         <div class="second-menu-title">
           {{item.subMenu.title}}
         </div>
         <ul>
-          <li :class="{active: key == 0}" v-for="(subItem, key) in item.subMenu.menuList" :key="key">
+          <li :class="{active: subItem.isShow}" v-for="(subItem, key) in item.subMenu.menuList" :key="key" @click="showSubList(key, index)">
             <router-link :to="subItem.href">{{subItem.name}}</router-link>
           </li>
         </ul>
@@ -26,67 +26,39 @@
 </template>
 
 <script>
-  //侧边栏显示列表
-  var itemList = [
-    {
-      link: '/shop/index',
-      name: '店铺',
-      subMenu: {
-        title: '店铺信息',
-        menuList: [{href: '/shop/index', name: '店铺概况'}, {href: '', name: '客服管理'}]
-      },
-      isShow: true   //首项默认显示
-    },
-    {
-      link: '###',
-      name: '商家',
-      subMenu: {
-        title: '商家信息',
-        menuList: [{href: '', name: '商家管理'},{href: '', name: '广告管理'},{href: '', name: '商家注册'}]
-      },
-      isShow: false
-    },
-    {
-      link: '/product/manage',
-      name: '商品',
-      subMenu: {
-        title: '商品信息',
-        menuList: [{href: '/product/manage', name: '商品管理'},{href: '', name: '商品发布'},{href: '', name: '分类管理'},{href: '', name: '品牌管理'}]
-      },
-      isShow: false
-    },
-    {
-      link: '###',
-      name: '订单',
-      subMenu: {
-        title: '订单信息',
-        menuList: [{href: '', name: '订单概况'},{href: '', name: '所有订单'},{href: '', name: '评价管理'}]
-      },
-      isShow: false
-    },
-    {
-      link: '###',
-      name: '优惠',
-      subMenu: {
-        title: '优惠信息',
-        menuList: [{href: '', name: '优惠券管理'},{href: '', name: 'VIP卡管理'}]
-      },
-      isShow: false
-    }
-  ]
+  import { store } from '../store/index'
+
   export default {
     name: 'aside',
+    store,
     data () {
       return {
-        itemList
       }
+    },
+    mounted () {
+      var url = /#(\/.*)/gm.exec(location.href)
+      var path = url[1].slice(1).split('/')
+
+      var nowPath = '/' + path[0]
+      var nowList = path.length > 1 ? '/' + path.join('/') : ''
+
+      this.$store.commit('changeShowMenu', {nowPath, nowList})
+    },
+    computed: {
+      itemList () {
+        return this.$store.state.itemList
+      } 
     },
     methods: {
       showSubmenu (index) {
-        for(var i = 0; i < itemList.length; i++) {
-          itemList[i].isShow = false;
-        }
-        itemList[index].isShow = true;
+        this.nowPath = '';
+        this.nowList = '';
+        this.$store.commit('showSubmenu', {index})
+      },
+      showSubList (key, index) {
+        this.nowPath = '';
+        this.nowList = '';
+        this.$store.commit('showSubList', {key, index})
       }
     }
   }
