@@ -9,7 +9,7 @@ var itemList = [
     name: '店铺',
     subMenu: {
       title: '店铺信息',
-      menuList: [{href: '/shop/index', name: '店铺概况', isShow: true}, {href: '', name: '客服管理', isShow: false}]
+      menuList: [{href: '/shop/index', name: '店铺概况', isShow: true}, {href: '/shop/service', name: '客服管理', isShow: false}]
     },
     isShow: true   //首项默认显示
   },
@@ -27,7 +27,7 @@ var itemList = [
     name: '商品',
     subMenu: {
       title: '商品信息',
-      menuList: [{href: '/product/manage', name: '商品管理', isShow: true},{href: '', name: '商品发布', isShow: false},{href: '', name: '分类管理', isShow: false},{href: '', name: '品牌管理', isShow: false}]
+      menuList: [{href: '/product/manage', name: '商品管理', isShow: true},{href: '/product/issue', name: '商品发布', isShow: false},{href: '', name: '分类管理', isShow: false},{href: '', name: '品牌管理', isShow: false}]
     },
     isShow: false
   },

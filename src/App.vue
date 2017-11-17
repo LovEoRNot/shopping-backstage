@@ -31,11 +31,6 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   font-size: 100%;
   vertical-align: baseline;
 }
-
-li {
-  list-style: none;
-}
-
 html {height: 100%}
 
 body {
@@ -63,6 +58,9 @@ a {
     color: #59f;
     text-decoration: none;
   }
+}
+li {
+  list-style: none;
 }
 
 #app {
@@ -144,6 +142,22 @@ a {
   }
 }
 
+.sp-btn-primary {
+  color: #fff;
+  background: #38f;
+  border-color: #38f;
+
+  &:focus, &:link, &:visited, &:hover {
+    color: #fff;
+  }  
+
+  &:active {
+    color: #fff;
+    background: #27f;
+    border-color: #27f;
+  }
+}
+
 .info-header {
   position: relative;
   height: 50px;
@@ -175,5 +189,75 @@ a {
   border: 1px solid rgb(221, 221, 221);
   border-radius: 2px;
   outline: none; 
+}
+.table { 
+  min-width: 750px;
+
+  font-size: 12px;
+  border-bottom: 2px solid #F2F2F2; 
+  
+  thead {
+    background: #F8F8F8;
+  }
+
+  th, td {
+    text-align: center;
+    transition: all .3s;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  .parameter {
+    width: 350px;
+    overflow: hidden; 
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    @media screen and (max-width: 1280px) {
+      width: 200px;
+    }
+  }
+  .goods {
+    width: 20%;        
+  }
+  
+  .desc {
+    width: 15%;        
+  }
+}
+
+.info-footer {
+  position: relative;
+
+  .pagination {
+    position: absolute;
+    left: 50%;
+    top: 5px;
+    transform: translateX(-50%);
+  }
+
+  .pagination-info {
+    position: absolute;
+    right: 0;
+    top: 8px;
+    font-size: 12px;
+  }
+}
+.my-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background: rgba(0, 0, 0, .3);
+
+  .my-modal-body {
+    margin: 10% auto 0;
+    width: 30%;
+    padding: 10px;
+    background: #fff;
+    box-shadow: 0 0 8px #666;
+    border-radius: 3px;
+  }
 }
 </style>

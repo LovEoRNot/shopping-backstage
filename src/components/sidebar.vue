@@ -36,13 +36,7 @@
       }
     },
     mounted () {
-      var url = /#(\/.*)/gm.exec(location.href)
-      var path = url[1].slice(1).split('/')
-
-      var nowPath = '/' + path[0]
-      var nowList = path.length > 1 ? '/' + path.join('/') : ''
-
-      this.$store.commit('changeShowMenu', {nowPath, nowList})
+     this.watchRouteChange()
     },
     computed: {
       itemList () {
@@ -50,6 +44,15 @@
       } 
     },
     methods: {
+      watchRouteChange () {
+        var url = /#(\/.*)/gm.exec(location.href)
+        var path = url[1].slice(1).split('/')
+
+        var nowPath = '/' + path[0]
+        var nowList = path.length > 1 ? `${nowPath}/${path[1]}` : ''
+
+        this.$store.commit('changeShowMenu', {nowPath, nowList})
+      },
       showSubmenu (index) {
         this.nowPath = '';
         this.nowList = '';
@@ -59,6 +62,12 @@
         this.nowPath = '';
         this.nowList = '';
         this.$store.commit('showSubList', {key, index})
+      }
+    },
+    watch: {
+      //监听路由变化事件，对侧边栏做出及时反馈
+      '$route' (to, from) {
+        this.watchRouteChange()
       }
     }
   }

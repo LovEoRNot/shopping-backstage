@@ -14,7 +14,7 @@
           <h2>所以我是什么店</h2>
         </div>
         <div class="shop-btn-group">
-          <a href="" class="sp-btn sp-btn-success">发布商品</a>
+          <router-link to="/product/issue" class="sp-btn sp-btn-success">发布商品</router-link>
           <a href="" class="sp-btn">访问店铺</a>
         </div>
       </div>

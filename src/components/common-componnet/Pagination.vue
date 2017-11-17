@@ -38,7 +38,7 @@ export default {
     }
   },
   computed: {
-    getTotalPage () {  //总页数
+    getTotalPage () { 
       return Math.ceil(this.total / this.display)
     },
     getPageList () {

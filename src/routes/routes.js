@@ -1,32 +1,15 @@
 import VueRouter from 'vue-router'
-import ShopInfoIndex from '../components/shop-info-componnet/ShopInfoIndex.vue'
+import { shop } from './shop-route/shopRoute'
+import { product } from './product-route/productRoute'
 
-const routes = [
+let routes = [
   {
     path: '/',
     redirect: '/shop/index'
-  },
-  {
-    path: '/shop',
-    component: ShopInfoIndex,
-    children: [
-      {
-        path: 'index',
-        component: ShopInfoIndex
-      }
-    ]
-  },
-  {
-    path: '/product',
-    component: resolve => require(['../components/product-info-component/ProductInfoManage.vue'],resolve),
-    children: [
-      {
-        path: 'manage',
-        component: resolve => require(['../components/product-info-component/ProductInfoManage.vue'],resolve),
-      }
-    ]
-  }
+  },  
 ]
+
+routes = routes.concat(shop, product)
 
 export const router = new VueRouter({
   base: __dirname,

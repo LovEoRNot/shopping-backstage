@@ -2,14 +2,20 @@
 <div class="product-info-manage">
   <div class="info-header">
     <ul>
-      <li class="active"><a href=""><span>出售中</span></a></li>
-      <li><a href=""><span>已售罄</span></a></li>
-      <li><a href=""><span>仓库中</span></a></li>
+      <li :class="{active: menuOnShowIndex == 0}" @click="menuOnShowIndex = 0">
+        <router-link to="/product/manage/onsale"><span>出售中</span></router-link>
+      </li>
+      <li :class="{active: menuOnShowIndex == 1}" @click="menuOnShowIndex = 1">
+        <router-link to="/product/manage/saleout"><span>已售罄</span></router-link>
+      </li>
+      <li :class="{active: menuOnShowIndex == 2}" @click="menuOnShowIndex = 2">
+        <a href=""><span>仓库中</span></a>
+      </li>
     </ul>
   </div>
   <div class="info-content">
     <div class="info-toolbar">
-      <a href="" class="sp-btn sp-btn-success">发布商品</a>
+      <router-link to="/product/issue" class="sp-btn sp-btn-success">发布商品</router-link>
       <div class="search-tool">
         <select class="chosen-container">
           <option value="">全部商品</option>
@@ -22,86 +28,30 @@
             <option value="">所有分组</option>
             <option value="">其他</option>
           </select>
-          <input type="text" class="search-input" placeholder="搜索">
+          <input type="text" class="search-input" placeholder="搜索" @keyup.enter="search()">      
         </div>       
       </div>
     </div>
     <div class="info-box">
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th><input type="checkbox" @click="checkAll()"></th>
-            <th class="goods">商品名称</th>
-            <th>价格</th>
-            <th>品牌</th>
-            <th class="desc">描述</th>
-            <th>一级分类</th>
-            <th>二级分类</th>
-            <th>三级分类</th>
-            <th>状态</th>
-            <th>操作</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><input type="checkbox" :checked="checked == true"></td>
-             <td><p class="parameter">卜珂松露形黑巧克力408克喜糖生日抹茶礼物礼盒装</p></td>
-            <td>18.00</td>
-            <td>无</td>
-            <td>5</td>
-            <td>6</td>
-            <td>7</td>
-            <td>8</td>
-            <td>9</td>
-            <td><a href="">编辑</a> - <a href="">下架</a></td>
-          </tr>
-          <tr>
-            <td><input type="checkbox" :checked="checked == true"></td>
-            <td><p class="parameter">卜珂松露形黑巧克力408克喜糖生日抹茶礼物礼盒装</p></td>
-            <td>18.00</td>
-            <td>无</td>
-            <td>5</td>
-            <td>6</td>
-            <td>7</td>
-            <td>8</td>
-            <td>9</td>
-            <td><a href="">编辑</a> - <a href="">下架</a></td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="info-footer">
-        <a href="" class="sp-btn">删除</a>
-        <Pagination :total="228" :current-page="1" @pageChange="pageChange"></Pagination>
-        <div class="pagination-info">
-          共228条，每页20条
-        </div>
-      </div>
+      <router-view></router-view>
     </div>
   </div>
 </div>
 </template>
 
 <script>
-import Pagination from '../Pagination.vue'
-
 export default {
-  components: {
-    Pagination
-  },
   data () {
     return {
-      checked: true
+      menuOnShowIndex: 0
     }
   },
-
+  mounted () {
+    this.$router.push({path: '/product/manage/onsale'})
+  },
   methods: {
-    checkAll () {
-      console.log('a;;')
-    },
-    //页面跳转事件
-    pageChange (page) {
-      
+    search () {
+      console.log('ss')
     }
   }
 }
@@ -179,64 +129,7 @@ export default {
         }
       }
     }   
-  }
-
-  .info-box {
-    
-    .table { 
-      min-width: 750px;
-
-      font-size: 12px;
-      border-bottom: 2px solid #F2F2F2; 
-      
-      thead {
-        background: #F8F8F8;
-      }
-
-      th, td {
-        text-align: center;
-        transition: all .3s;
-        vertical-align: middle;
-        white-space: nowrap;
-      }
-
-      .parameter {
-        width: 350px;
-        overflow: hidden; 
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        @media screen and (max-width: 1280px) {
-          width: 200px;
-        }
-      }
-      .goods {
-        width: 20%;        
-      }
-      
-      .desc {
-        width: 15%;        
-      }
-    }
-
-    .info-footer {
-      position: relative;
-
-      .pagination {
-        position: absolute;
-        left: 50%;
-        top: 5px;
-        transform: translateX(-50%);
-      }
-
-      .pagination-info {
-        position: absolute;
-        right: 0;
-        top: 8px;
-        font-size: 12px;
-      }
-    }
-  }
-  
+  } 
 }
 
 </style>
