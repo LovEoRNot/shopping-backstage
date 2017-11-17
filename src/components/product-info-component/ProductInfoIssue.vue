@@ -16,32 +16,39 @@
         <div class="type-list">
           <h4>一级分类：</h4>
           <ul>
-            <li :class="{active: type.name == curFirstType.name}" 
+            <li :class="{active: type.name == curFirstType}" 
                 v-for="(type, index) in firstType" 
                 :key="index"
-                @click="curFirstType = type">
+                @click="changeFirstType(type)"
+                v-show="index < 7">
                 {{type.value}}</li>
+            <li class="other-type">其他分类</li>
           </ul>
         </div>    
-        <div class="type-list" v-for="(type, index) in secondType" :key="index" v-show="type.firstType == curFirstType.name">
+        <div class="type-list" 
+             v-for="(type, index) in secondType" 
+             :key="index" 
+             v-show="type.fType == curFirstType">
           <h4>二级分类：</h4>
           <ul>
-            <li :class="{active: subType.name == curFirstType.name}" 
+            <li :class="{active: subType.name == curSecondType}" 
                 v-for="(subType, index) in type.subMenu" 
                 :key="index"
-                @click="curSecondType = subType">
+                @click="curSecondType = subType.name">
                 {{subType.value}}</li>
           </ul>
         </div>    
-        <div class="type-list">
+        <div class="type-list"
+             v-for="(type, index) in thirdType" 
+             :key="index" 
+             v-show="type.sType == curSecondType">
           <h4>三级分类：</h4>
           <ul>
-            <li class="active">零食</li>
-            <li>图书</li>
-            <li>文具</li>
-            <li>衣物</li>
-            <li>女装</li>
-            <li>男装</li>
+            <li :class="{active: tType.name == curThirdType}" 
+                v-for="(tType, index) in type.subMenu" 
+                :key="index"
+                @click="curThirdType = tType.name">
+                {{tType.value}}</li>
           </ul>
         </div> 
         <div class="next">
@@ -55,19 +62,34 @@
 
 <script>
 
-var firstType = [{name: 'women', value: '女装'}, {name: 'food', value: '食品'}, {name: 'book', value: '图书'}, {name: 'man', value: '男装'}, {name: 'writing', value: '文具'}]
-var secondType = [{firstType: 'woman', subMenu: [{name: 'womon1', value: '女装1'}]},
-                  {firstType: 'food', subMenu: [{name: 'food1', value: '食品1'}]},
-                  {firstType: 'book', subMenu: [{name: 'book1', value: '图书1'}]},
-                  {firstType: 'man', subMenu: [{name: 'man1', value: '男装1'}]},
-                  {firstType: 'writing', subMenu: [{name: 'writing1', value: '文具1'}]}]
+var firstType = [{name: 'women', value: '女装'}, {name: 'food', value: '食品'}, {name: 'book', value: '图书'}, {name: 'man', value: '男装'}, {name: 'writing', value: '文具'},{name: 'writing', value: '文具'},{name: 'writ5ing', value: '文具'},{name: 'writin3g', value: '文具'},{name: 'writi4ng', value: '文具'},{name: 'writing', value: '文具'}]
+var secondType = [{fType: 'women', subMenu: [{name: 'women1', value: '女装1'}]},
+                  {fType: 'food', subMenu: [{name: 'food1', value: '食品1'}]},
+                  {fType: 'book', subMenu: [{name: 'book1', value: '图书1'}]},
+                  {fType: 'man', subMenu: [{name: 'man1', value: '男装1'}]},
+                  {fType: 'writing', subMenu: [{name: 'writing1', value: '文具1'}]}]
+                  
+var thirdType = [{sType: 'women1', subMenu: [{name: 'women2', value: '女装2'}]},
+                  {sType: 'food1', subMenu: [{name: 'food2', value: '食品2'}]},
+                  {sType: 'book1', subMenu: [{name: 'book2', value: '图书2'}]},
+                  {sType: 'man1', subMenu: [{name: 'man2', value: '男装2'}]},
+                  {sType: 'writing1', subMenu: [{name: 'writing2', value: '文具2'}]}]
 export default {
   data () {
     return {
-      curFirstType: firstType[0],
-      curSecondType: secondType[0].subMenu[0],
+      curFirstType: '',//firstType[0].name,
+      curSecondType: '',//secondType[0].subMenu[0].name,
+      curThirdType: '',//thirdType[0].subMenu[0].name,
       firstType,
-      secondType
+      secondType,
+      thirdType
+    }
+  },
+  methods: {
+    changeFirstType (type) {
+      this.curFirstType = type.name
+      this.curSecondType = '';
+      this.curThirdType = '';
     }
   }
 }
@@ -117,6 +139,12 @@ export default {
         margin-bottom: 10px;
         padding: 20px;
         background: #F8F8F8;
+        animation: fadeIn .4s;
+
+        @keyframes fadeIn {
+          from {opacity: 0}
+          to {opacity: 1}
+        }
       }
 
       ul {
@@ -158,6 +186,9 @@ export default {
             background: #fff;
           }
         }
+        .other-type {
+          position: relative;
+        }
       }
       
       .next {
@@ -165,7 +196,7 @@ export default {
         background: #ffc;
         text-align: center;
       }
-
+      
     }
   }
 }
