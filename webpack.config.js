@@ -2,7 +2,7 @@ var path = require('path')
 var webpack = require('webpack')
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
 var HtmlWebpackPlugin = require('html-webpack-plugin')
-
+var autoprefixer = require('autoprefixer')
 var extractCSS = new ExtractTextPlugin('style/main.css')
 
 module.exports = {
@@ -18,7 +18,8 @@ module.exports = {
         test: /\.css$/,
         use: [
           'vue-style-loader',
-          'css-loader'
+          'css-loader',
+          'postcss-loader'
         ],
       },
       {
@@ -26,7 +27,8 @@ module.exports = {
         use: [
           'vue-style-loader',
           'css-loader',
-          'sass-loader'
+          'postcss-loader',
+          'sass-loader',
         ],
       },
       {
@@ -34,7 +36,8 @@ module.exports = {
         use: [
           'vue-style-loader',
           'css-loader',
-          'sass-loader?indentedSyntax'
+          'postcss-loader',
+          'sass-loader?indentedSyntax',
         ],
       },
       {
@@ -48,12 +51,14 @@ module.exports = {
             'scss': [
               'vue-style-loader',
               'css-loader',
-              'sass-loader'
+              'postcss-loader',
+              'sass-loader',
             ],
             'sass': [
               'vue-style-loader',
               'css-loader',
-              'sass-loader?indentedSyntax'
+              'postcss-loader',
+              'sass-loader?indentedSyntax',            
             ]
           }
           // other vue-loader options go here
