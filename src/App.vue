@@ -102,6 +102,10 @@ li {
   cursor: pointer;
   transition: background-color .3s;
 
+  &[disabled] {
+    opacity: .5;
+    cursor: auto
+  }
   &:focus, &:link, &:visited {
     color: #333;
   }
@@ -157,6 +161,28 @@ li {
     border-color: #27f;
   }
 }
+
+.sp-input {
+  display: inline-block;
+  padding: 4px 6px;
+  font-size: 14px;
+  line-height: 20px;
+  color: #555;
+  vertical-align: middle;
+  border-radius: 4px;
+  background-color: #fff;
+  border: 1px solid #ccc; 
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  transition: border linear .2s,box-shadow linear .2s; 
+
+  &:focus {
+    border-color: rgba(82,168,236,.8);
+    outline: none;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(82, 168, 236, .6);
+  }
+}
+
+
 
 .info-header {
   position: relative;

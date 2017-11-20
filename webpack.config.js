@@ -105,14 +105,14 @@ if (process.env.NODE_ENV === 'production') {
       test: /\.css$/,
       use: ExtractTextPlugin.extract({
         fallback: "vue-style-loader",
-        use: "css-loader"
+        use: ["css-loader", 'postcss-loader']
       })
     },
     {
       test: /\.scss$/,
       use: ExtractTextPlugin.extract({
         fallback: "vue-style-loader",
-        use: ["css-loader", 'sass-loader']
+        use: ["css-loader", 'postcss-loader', 'sass-loader']
       })
     },
     {
@@ -122,7 +122,7 @@ if (process.env.NODE_ENV === 'production') {
         loaders: {
           'scss': ExtractTextPlugin.extract({          
             fallback: "vue-style-loader",
-            use: ["css-loader", 'sass-loader']
+            use: ["css-loader", 'postcss-loader', 'sass-loader']
           })
         }
       }
